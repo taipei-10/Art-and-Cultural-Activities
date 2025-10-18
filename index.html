@@ -1,0 +1,405 @@
+這是單頁網站程式碼（HTML+CSS+JS）。
+
+```html
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>智慧藝文媒合平台</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root { --brand:#0d6efd; }
+    body { scroll-behavior:smooth; }
+    .navbar-blur{ backdrop-filter:saturate(180%) blur(8px); background-color:rgba(255,255,255,.85);}
+    .hero{ background:linear-gradient(135deg,#eef4ff,white);}
+    .section-title{border-left:.25rem solid var(--brand); padding-left:.75rem; font-weight:700;}
+    .chip{border:1px solid #dee2e6; border-radius:999px; padding:.25rem .6rem; margin:.15rem; font-size:.85rem;}
+    .icon{font-size:1.25rem; margin-right:.5rem; color:var(--brand);}
+    .card-hover:hover{transform:translateY(-2px); box-shadow:0 .5rem 1rem rgba(0,0,0,.08); transition:.2s;}
+    .kpi{font-size:2rem; font-weight:700;}
+    footer a{color:inherit}
+    .badge-soft{background-color:#eef4ff; color:#0d6efd;}
+    .sticky-tools{position:fixed; right:1rem; bottom:1rem; z-index:1040;}
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light navbar-blur fixed-top border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">智慧藝文媒合</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#intro">前言</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">服務</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">特色</a></li>
+          <li class="nav-item"><a class="nav-link" href="#functions">功能</a></li>
+          <li class="nav-item"><a class="nav-link" href="#tech">技術</a></li>
+          <li class="nav-item"><a class="nav-link" href="#users">對象</a></li>
+          <li class="nav-item"><a class="nav-link" href="#env">環境</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">結語</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero pt-6" style="padding-top:6rem;">
+    <div class="container py-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-6">
+          <h1 class="display-5 fw-bold">把藝文活動推到你眼前</h1>
+          <p class="lead mt-3">整合臺北市資料大平台，給需求者與供給者的雙向服務。個人化推薦、智能媒合、行前提醒。</p>
+          <div class="d-flex gap-2 mt-3">
+            <a href="#services" class="btn btn-primary"><i class="bi bi-magic"></i> 開始探索</a>
+            <a href="#demo" class="btn btn-outline-primary"><i class="bi bi-lightning-charge"></i> 即時示範</a>
+          </div>
+          <div class="mt-4">
+            <span class="chip">活動類型</span>
+            <span class="chip">票價</span>
+            <span class="chip">距離</span>
+            <span class="chip">時間</span>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="mb-3"><i class="bi bi-search icon"></i>快速搜尋</h5>
+              <form id="searchForm" class="row g-2">
+                <div class="col-md-4">
+                  <label class="form-label">類型</label>
+                  <select class="form-select" name="type">
+                    <option value="">不限</option>
+                    <option>展覽</option><option>表演</option><option>講座</option><option>親子</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">票價上限</label>
+                  <input type="number" min="0" class="form-control" name="price" placeholder="如 500">
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">時間</label>
+                  <input type="date" class="form-control" name="date">
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-primary w-100" type="submit"><i class="bi bi-funnel"></i> 篩選</button>
+                </div>
+              </form>
+              <hr>
+              <div id="results" class="row g-3"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="demo" class="row text-center mt-4">
+        <div class="col">
+          <span class="kpi">2</span><span class="text-muted ms-1">大服務</span>
+          <span class="kpi ms-4">9</span><span class="text-muted ms-1">核心功能</span>
+          <span class="kpi ms-4">4</span><span class="text-muted ms-1">主要對象</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Intro -->
+  <section id="intro" class="py-5">
+    <div class="container">
+      <h2 class="section-title">一、前言</h2>
+      <p class="mt-3">資料分散且不即時。平台整合公開藝文資料，透過 AI 做推薦與媒合，提升市民參與與場館利用率。</p>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title">二、創意描述｜雙核心服務</h2>
+      <div class="row g-4 mt-1">
+        <div class="col-md-6">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <span class="badge badge-soft mb-2">需求者</span>
+              <h5>個人化活動推薦</h5>
+              <ul class="mt-2 mb-0">
+                <li>依類型、距離、時間、票價推薦</li>
+                <li>整合評價與消費紀錄</li>
+                <li>相似活動與日曆提醒</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <span class="badge badge-soft mb-2">供給者</span>
+              <h5>場館與時段自動媒合</h5>
+              <ul class="mt-2 mb-0">
+                <li>輸入時段、設備、空間需求</li>
+                <li>自動配對可用場地</li>
+                <li>提供租用方案與估價</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-primary mt-4 mb-0"><i class="bi bi-cpu"></i> 後端以歷史資料預測參與人數，協助宣傳與定價。</div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-5">
+    <div class="container">
+      <h2 class="section-title">四、系統特色</h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-1">
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><i class="bi bi-person-check icon"></i><b>個人化推薦</b><div>以評價與消費紀錄精準推播</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><i class="bi bi-arrow-left-right icon"></i><b>雙向服務</b><div>滿足需求者與供給者</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><i class="bi bi-graph-up icon"></i><b>智能預測</b><div>估算人數與收益</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><i class="bi bi-mic icon"></i><b>多元互動</b><div>語音、手勢、AR</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><i class="bi bi-building icon"></i><b>政府連結</b><div>串接台北市資料大平台</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Functions -->
+  <section id="functions" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title">三、系統功能</h2>
+      <div class="row g-3 mt-1">
+        <div class="col-lg-8">
+          <ol class="list-group list-group-numbered">
+            <li class="list-group-item">活動搜尋與推薦</li>
+            <li class="list-group-item">智能排程媒合</li>
+            <li class="list-group-item">街頭藝人專區</li>
+            <li class="list-group-item">報名與日曆提醒</li>
+            <li class="list-group-item">店家場地租借</li>
+            <li class="list-group-item">滿意度評價</li>
+            <li class="list-group-item">AI 客服與語音導覽</li>
+            <li class="list-group-item">AR 實境導覽</li>
+            <li class="list-group-item">AI 行銷生成</li>
+          </ol>
+        </div>
+        <div class="col-lg-4">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <h6 class="mb-2">示範：加入行事曆</h6>
+              <button id="icsBtn" class="btn btn-outline-primary w-100"><i class="bi bi-calendar2-plus"></i> 下載 .ics</button>
+              <small class="text-muted d-block mt-2">將選中的活動加入你的行事曆。</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech -->
+  <section id="tech" class="py-5">
+    <div class="container">
+      <h2 class="section-title">五、開發工具與技術</h2>
+      <div class="row g-3 mt-1">
+        <div class="col-md-6">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <h6>前端 / 輔助</h6>
+              <div class="mb-2">
+                <span class="chip">Bootstrap</span>
+                <span class="chip">Mediapipe(手勢)</span>
+                <span class="chip">Google Maps API</span>
+                <span class="chip">STT / TTS</span>
+              </div>
+              <h6>後端 / 自動化</h6>
+              <div>
+                <span class="chip">n8n</span>
+                <span class="chip">Airtable</span>
+                <span class="chip">LangChain</span>
+                <span class="chip">Vector Store</span>
+                <span class="chip">ML 預測</span>
+                <span class="chip">GenAI Image/Video</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <h6>架構草圖</h6>
+              <ul class="mb-0">
+                <li>資料來源：臺北市資料大平台 API</li>
+                <li>任務流：n8n 定期抓取與通知</li>
+                <li>資料庫：Airtable 活動、場地、評價</li>
+                <li>推理層：RAG + 推薦 + 預測</li>
+                <li>前端：行動優先單頁應用</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Users -->
+  <section id="users" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title">六、使用對象</h2>
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 mt-1">
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><b>一般民眾</b><div class="text-muted">找到合適活動並獲得提醒</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><b>街頭藝人</b><div class="text-muted">排程找點位、粉絲募資</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><b>場館/店家</b><div class="text-muted">出租空檔、提升利用率</div></div></div></div>
+        <div class="col"><div class="card h-100 card-hover"><div class="card-body"><b>市府/文化局</b><div class="text-muted">政策成效與資源分析</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Environment -->
+  <section id="env" class="py-5">
+    <div class="container">
+      <h2 class="section-title">七、使用環境</h2>
+      <div class="row g-3 mt-1">
+        <div class="col-md-4"><div class="card h-100 card-hover"><div class="card-body"><b>硬體</b><div>PC/筆電；AI 生成需 GPU 伺服器</div></div></div></div>
+        <div class="col-md-4"><div class="card h-100 card-hover"><div class="card-body"><b>軟體</b><div>使用端瀏覽器；開發端 Python/Streamlit/n8n/LangChain/Airtable；雲端部署</div></div></div></div>
+        <div class="col-md-4"><div class="card h-100 card-hover"><div class="card-body"><b>互動</b><div>行動裝置支援 AR 與通知</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Outro -->
+  <section id="contact" class="py-5 bg-light">
+    <div class="container">
+      <h2 class="section-title">八、結語</h2>
+      <p class="mt-3">結合公開資料與 AI，促進參與、提高場館利用、支持產業永續。未來可延伸為社群 APP 與會員制商模。</p>
+      <div class="mt-3">
+        <a class="btn btn-primary" href="#services"><i class="bi bi-rocket"></i> 立即體驗概念</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Tools -->
+  <div class="sticky-tools">
+    <div class="btn-group dropup">
+      <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-tools"></i> 工具</button>
+      <ul class="dropdown-menu dropdown-menu-end">
+        <li><a class="dropdown-item" href="#" id="exportJson"><i class="bi bi-filetype-json"></i> 匯出搜尋結果</a></li>
+        <li><a class="dropdown-item" href="#" id="clearFilter"><i class="bi bi-x-circle"></i> 清空篩選</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <footer class="border-top py-4">
+    <div class="container small d-flex flex-wrap gap-2 justify-content-between">
+      <div>© 2025 智慧藝文媒合</div>
+      <div class="text-muted">資料來源：臺北市資料大平台（示意）</div>
+    </div>
+  </footer>
+
+  <script>
+    // --- Demo dataset (可替換為 API 回傳) ---
+    const DATA = [
+      { id:1, title:"當代攝影展", type:"展覽", price:150, date:"2025-11-02", place:"市立美術館", lat:25.091, lng:121.525 },
+      { id:2, title:"室內樂之夜", type:"表演", price:600, date:"2025-10-28", place:"城市舞台", lat:25.045, lng:121.536 },
+      { id:3, title:"親子創客工作坊", type:"親子", price:0, date:"2025-10-30", place:"科教館", lat:25.096, lng:121.516 },
+      { id:4, title:"設計思考講座", type:"講座", price:200, date:"2025-11-05", place:"創新基地", lat:25.047, lng:121.517 }
+    ];
+
+    const resultsEl = document.getElementById('results');
+    const form = document.getElementById('searchForm');
+
+    function renderCards(list){
+      resultsEl.innerHTML = list.map(e=>`
+        <div class="col-md-6">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <span class="badge bg-secondary">${e.type}</span>
+                <span class="text-muted">${e.date}</span>
+              </div>
+              <h5 class="mt-2">${e.title}</h5>
+              <div class="text-muted">${e.place}</div>
+              <div class="mt-2"><i class="bi bi-ticket-perforated"></i> 票價：${e.price===0?'免費':'$'+e.price}</div>
+              <div class="mt-3 d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary" onclick="addToICS(${e.id})"><i class="bi bi-calendar-plus"></i> 加入行事曆</button>
+                <button class="btn btn-sm btn-primary" onclick="bookmark(${e.id})"><i class="bi bi-bookmark"></i> 儲存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('') || '<div class="col"><div class="text-muted">無符合結果</div></div>';
+    }
+
+    function filter(data, q){
+      return data.filter(e=>{
+        const byType = q.type ? e.type===q.type : true;
+        const byPrice = q.price ? e.price <= q.price : true;
+        const byDate = q.date ? e.date === q.date : true;
+        return byType && byPrice && byDate;
+      }).sort((a,b)=>a.date.localeCompare(b.date));
+    }
+
+    form.addEventListener('submit', (ev)=>{
+      ev.preventDefault();
+      const fd = new FormData(form);
+      const q = Object.fromEntries(fd.entries());
+      renderCards(filter(DATA, q));
+    });
+
+    document.getElementById('clearFilter').addEventListener('click', ()=>{
+      form.reset();
+      renderCards(DATA);
+    });
+
+    // --- Calendar (.ics) export for a single event ---
+    function makeICS(e){
+      const dt = e.date.replaceAll('-','');
+      const uid = e.id + '@arts.example';
+      return `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//ArtsMatch//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:${uid}
+DTSTAMP:${dt}T090000Z
+DTSTART:${dt}T090000Z
+DTEND:${dt}T110000Z
+SUMMARY:${e.title}
+LOCATION:${e.place}
+DESCRIPTION:由智慧藝文媒合加入
+END:VEVENT
+END:VCALENDAR`.replace(/\n/g, '\r\n');
+    }
+
+    function download(filename, content){
+      const blob = new Blob([content], {type:'text/calendar;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function addToICS(id){
+      const e = DATA.find(x=>x.id===id);
+      if(!e) return;
+      download(`${e.title}.ics`, makeICS(e));
+    }
+
+    document.getElementById('icsBtn').addEventListener('click', ()=>{
+      if(DATA.length) addToICS(DATA[0].id);
+    });
+
+    function bookmark(id){
+      const key='arts_saved';
+      const saved = new Set(JSON.parse(localStorage.getItem(key)||'[]'));
+      saved.has(id) ? saved.delete(id) : saved.add(id);
+      localStorage.setItem(key, JSON.stringify([...saved]));
+      alert('已更新收藏');
+    }
+
+    document.getElementById('exportJson').addEventListener('click', ()=>{
+      download('results.json', JSON.stringify(DATA, null, 2));
+    });
+
+    // initial render
+    renderCards(DATA);
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+```
